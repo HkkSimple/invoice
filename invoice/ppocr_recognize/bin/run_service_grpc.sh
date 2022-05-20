@@ -1,0 +1,1 @@
+python server_grpc.py --config-file ./bin/crnn_grpc.yaml

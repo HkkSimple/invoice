@@ -1,0 +1,1 @@
+python server_flask.py --config-file ./bin/crnn_flask.yaml

@@ -1,0 +1,33 @@
+SERVICE:
+  NAME: 'crnn'
+  IP: '0.0.0.0'
+  URI: '/crnn'
+  PORT: 30302
+  IO_MODULE: 'DefaultIO'
+  APPLICATION_MODULE: 'crnnApp'
+  COMMUNICATION_MODULE: 'defaultFlaskComm'
+  MANAGED_MODEL: ''
+  STREAMER_SERVER: 'threaded_streamer'
+  MODEL_MODULE: 'crnn'
+  REQUEST_MODE: 'url'
+  THREADED: True
+  TASK:
+    BATCH_SIZE: 32
+    MAX_LATENCY: 0.01
+    GPU_WORKER_NUM: 1
+MODEL:
+  GPU_ID: '-1,'
+  CHAR_TYPE: 'ch'
+  CHARACTER_DICT_PATH: './data/ppocr_keys_v1.txt'
+  WEIGHTS: './data/ch_ppocr_server_v2.0_rec_infer/'
+  USE_SPACE_CHAR: True
+  IMAGE:
+    MAX_SIZE: 960
+    CHANNEL: 3
+LOG:
+  FILE_PATH: '/mnt/share/log/invoice/crnn.log'
+  LOG_NAME: 'crnn'
+  OUTPUT_FORMAT: '{"@timestamp":"%(asctime)s", "Level":"%(levelname)s", "Message":%(message)s, "Class":"ocr"}'
+  TIMEROTATINGFILEHANDLER:
+    WHEN: 'midnight'
+    INTERVAL: 1

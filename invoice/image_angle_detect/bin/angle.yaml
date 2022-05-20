@@ -1,0 +1,29 @@
+SERVICE:
+  NAME: 'angle'
+  IP: '127.0.0.1'
+  URI: '/ocr/image_angle_detect'
+  PORT: 30101
+  IO_MODULE: 'DefaultIO'
+  APPLICATION_MODULE: 'angleApp'
+  COMMUNICATION_MODULE: 'defaultFlaskComm'
+  MANAGED_MODEL: ''
+  STREAMER_SERVER: 'threaded_streamer'
+  MODEL_MODULE: 'angle'
+  REQUEST_MODE: 'url'
+  THREADED: True
+  TASK:
+    BATCH_SIZE: 5
+    MAX_LATENCY: 0.01
+    GPU_WORKER_NUM: 1
+MODEL:
+  GPU_ID: '-1,'
+  WEIGHTS: './ckpt/Angle-model.pb'
+  IMAGE:
+    CHANNEL: 3
+LOG:
+  FILE_PATH: '/mnt/share/log/invoice/angle.log'
+  LOG_NAME: 'angle'
+  OUTPUT_FORMAT: '{"@timestamp":"%(asctime)s", "Level":"%(levelname)s", "Message":%(message)s, "Class":"ocr"}'
+  TIMEROTATINGFILEHANDLER:
+    WHEN: 'midnight'
+    INTERVAL: 1

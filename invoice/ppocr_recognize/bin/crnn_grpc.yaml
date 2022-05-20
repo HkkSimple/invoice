@@ -1,0 +1,34 @@
+SERVICE:
+  NAME: 'crnn'
+  IP: '0.0.0.0'
+  URI: '/crnn'
+  PORT: 9078
+  IO_MODULE: 'DefaultIO'
+  APPLICATION_MODULE: 'crnnApp'
+  COMMUNICATION_MODULE: 'defaultGrpcComm'
+  GRPC_SERVICER: 'crnnGrpcServicer'
+  MANAGED_MODEL: ''
+  STREAMER_SERVER: 'threaded_streamer'
+  MODEL_MODULE: 'crnn'
+  REQUEST_MODE: 'url'
+  THREADED: True
+  TASK:
+    BATCH_SIZE: 64
+    MAX_LATENCY: 0.01
+    GPU_WORKER_NUM: 1
+MODEL:
+  GPU_ID: '0,'
+  CHAR_TYPE: 'ch'
+  USE_SPACE_CHAR: True
+  CHARACTER_DICT_PATH: './data/ppocr_keys_v1.txt'
+  WEIGHTS: './data/ch_ppocr_server_v2.0_rec_infer/'
+  IMAGE:
+    MAX_SIZE: 960
+    CHANNEL: 3
+LOG:
+  FILE_PATH: './log/crnn.log'
+  LOG_NAME: 'crnn'
+  OUTPUT_FORMAT: '{"@timestamp":"%(asctime)s", "Level":"%(levelname)s", "Message":%(message)s, "Class":"ocr"}'
+  TIMEROTATINGFILEHANDLER:
+    WHEN: 'midnight'
+    INTERVAL: 1

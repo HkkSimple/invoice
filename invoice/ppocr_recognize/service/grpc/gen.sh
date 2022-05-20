@@ -1,0 +1,1 @@
+python -m grpc_tools.protoc --python_out=./crnn --grpc_python_out=./crnn -I./proto ./proto/crnn.proto

@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+service crnn{
+    rpc crnn(crnnRequest) returns (crnnResponse){} 
+}
+
+// =============================== crnn process ======================
+
+message crnnRequest{
+    bytes imageData = 1;
+    string imageUUID = 2;
+    string information = 3;
+}
+
+message crnnResponseData{
+    string content = 1;
+    string score = 2;
+    string information = 3;
+}
+
+message crnnResponse{
+    string responseCode = 1;
+    string responseMSG = 2;
+    crnnResponseData responseData = 3;
+}
