@@ -35,7 +35,8 @@ def image_to_base64(arr):
 if __name__ == "__main__":
     # url = "http://47.98.153.185:64328/invoice"
     # url = "http://127.0.0.1:30500/invoice"
-    url = "http://172.17.0.2:30500/invoice"
+    # url = "http://172.17.0.2:30500/invoice"
+    url = "http://123.60.93.208:38000/invoice"
     headers = {"Content-Type": 'application/json;charset=UTF-8'}
     base64_str = path_image_to_base64('data/3.jpg')
     param = {"imageData": base64_str,
