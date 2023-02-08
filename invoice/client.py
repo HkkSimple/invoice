@@ -3,6 +3,7 @@ import numpy as np
 import cv2
 import requests
 import json
+from time import time
 
 
 def request_api(url, header, params):
@@ -36,10 +37,17 @@ if __name__ == "__main__":
     # url = "http://47.98.153.185:64328/invoice"
     # url = "http://127.0.0.1:30500/invoice"
     # url = "http://172.17.0.2:30500/invoice"
-    url = "http://123.60.93.208:38000/invoice"
+    # url = "http://123.60.93.208:38000/invoice"
+    url = "http://127.0.0.1:30005/invoice"
     headers = {"Content-Type": 'application/json;charset=UTF-8'}
-    base64_str = path_image_to_base64('data/3.jpg')
+
+    t1 = time()
+    base64_str = path_image_to_base64('data/5.jpg')
     param = {"imageData": base64_str,
             "imageUUID": 'AILab-test'}
+    with open('tt.txt', 'w') as f:
+        f.write(base64_str)
     result = requests.post(url, headers=headers, data=json.dumps(param)).json()
+    t2 = time()
+    print('use time:', t2-t1)
     print(result)

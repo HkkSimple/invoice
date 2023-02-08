@@ -14,4 +14,4 @@ unset __conda_setup
 # <<< conda initialize <<<
 conda activate base
 
-python server.py
+python server_informa.py

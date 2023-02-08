@@ -1,6 +1,8 @@
+import os
 import cv2
 import base64
 import numpy as np
+import time
 
 
 def draw_text_det_res(dt_boxes, img_path):
@@ -272,3 +274,13 @@ def rotate_bound(image, angle):
     M[1, 2] += (newH - h) / 2
     # 执行实际的旋转并返回图像
     return cv2.warpAffine(image, M, (newW, newH)) # borderValue 缺省，默认是黑色
+
+
+def day_dir(root, create=True):
+    day_str = time.strftime('%Y-%m-%d',time.localtime(time.time()))
+    day_dir = os.path.join(root, day_str)
+    if (not os.path.exists(day_dir)) and create:
+        os.makedirs(day_dir)
+    return day_dir
+
+

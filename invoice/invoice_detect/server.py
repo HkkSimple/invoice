@@ -30,7 +30,7 @@ def get_image_content():
               'responseData': {}})
 
 if __name__ == "__main__":
-    weights = './data/invoice_detect.onnx'
+    weights = './ckpt/invoice_detect.onnx'
     DETECT_MODEL = detectApp(weights)
     app.run(debug=False,
         port='30401',

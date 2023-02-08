@@ -4,7 +4,8 @@ import onnxruntime
 
 import numpy as np
 
-from . import util as ut
+# from . import util as ut
+import util as ut
 
 
 """
@@ -39,7 +40,8 @@ class detectApp:
 
     # create and load the model
     def init_model(self):
-        self.model = onnxruntime.InferenceSession(self.weights, None)
+        # self.model = onnxruntime.InferenceSession(self.weights, providers=['CPUExecutionProvider'])
+        self.model = onnxruntime.InferenceSession(self.weights, providers=['CUDAExecutionProvider'])
         self.outputs_name = self.model.get_outputs()[0].name
         self.inputs_names = self.model.get_inputs()[0].name
         self.max_size = self.check(self.max_size, self.stride) # check some input param ruly
