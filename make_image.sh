@@ -1,6 +1,6 @@
 #! /bin/bash
 
-image_name=kksimple/invoice:cpu_version_0.01
+image_name=kksimple/invoice:cpu_version_0.02
 
 docker image build . -t $image_name
 

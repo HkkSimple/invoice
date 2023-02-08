@@ -1,3 +1,5 @@
+import os
+import time
 import json
 import cv2
 from flask import Flask, request, jsonify
@@ -9,6 +11,14 @@ from crnn_client import crnn
 
 app = Flask(__name__)
 
+# 按天创建文件夹，并返回
+def day_dir(root, create=True):
+    day_str = time.strftime('%Y-%m-%d',time.localtime(time.time()))
+    day_dir = os.path.join(root, day_str)
+    if (not os.path.exists(day_dir)) and create:
+        os.makedirs(day_dir)
+    return day_dir
+
 # 获取指定元素得位置
 @app.route('/invoice', methods=['POST'])
 def get_image_content():
@@ -16,6 +26,10 @@ def get_image_content():
               'responseMSG': 'error', 
               'responseData': []}
     ele_result = []
+    store_img = True
+    data_store_root = '/mnt/share/img_store/invoice'
+    if not os.path.exists(data_store_root):
+        os.makedirs(data_store_root)
     try:
         data = json.loads(request.get_data())
         base64_image_data = data['imageData']
@@ -24,6 +38,10 @@ def get_image_content():
 
         # image angle recognize
         angle, img = angle_recognize(base64_image_data, img, uuid)
+        if store_img:
+            day_data_store_root = day_dir(data_store_root) # request image store data
+            img_store_path = os.path.join(day_data_store_root, str(int(time.time()*10000000)) + '_' +uuid +'.jpg')
+            cv2.imwrite(img_store_path, img)
 
         # text items detect 
         locations, scores, class_names = DETECT_MODEL.inference(img)
@@ -54,8 +72,6 @@ def get_image_content():
         result['responseData'] = ele_result
         result['responseCode'] = '0000'
         result['responseMSG'] = 'succeed'
-        
-            
         return jsonify(result)
     except:
         return jsonify(
@@ -64,7 +80,7 @@ def get_image_content():
               'responseData': []})
 
 if __name__ == "__main__":
-    weights = './invoice_detect/data/invoice_detect.onnx'
+    weights = './invoice_detect/ckpt/invoice_detect.onnx'
     DETECT_MODEL = detectApp(weights)
     app.run(debug=False,
         port='30500',
